@@ -15,7 +15,7 @@ fun main() {
         .publishOn(Schedulers.parallel())
         .subscribe(
             {
-                sleep(1L)
+                sleep(5L)
                 onNext(it)
             },
             {
