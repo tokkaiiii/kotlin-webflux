@@ -15,7 +15,7 @@ fun main() {
         .doOnNext { info("# emitted by original Flux: $it") }
         .onBackpressureBuffer(
             2,
-            { dropped -> info("# Overflow $dropped") },
+            { dropped -> info("# Overflow & dropped $dropped") },
             DROP_LATEST
         )
         .doOnNext { info("# emitted by Buffer: $it") }

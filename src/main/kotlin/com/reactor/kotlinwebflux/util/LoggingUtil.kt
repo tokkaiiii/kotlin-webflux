@@ -31,7 +31,7 @@ fun onNext(data: Any) {
 }
 
 fun onNext(data1: Any, data2: Any) {
-    log.info("# onNext() $data1 : $data2")
+    log.info("# $data1 onNext(): $data2")
 }
 
 fun doOnNext(taskName: String, operator: String, data: Any) {
