@@ -25,6 +25,7 @@ repositories {
 }
 
 dependencies {
+    implementation ("com.jayway.jsonpath:json-path")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")

@@ -1,25 +1,23 @@
 package com.reactor.kotlinwebflux.practice
 
-import com.reactor.kotlinwebflux.util.*
-import org.reactivestreams.Subscription
-import reactor.core.publisher.BaseSubscriber
-import reactor.core.publisher.BufferOverflowStrategy
-import reactor.core.publisher.BufferOverflowStrategy.*
+import com.reactor.kotlinwebflux.util.doOnNext
+import com.reactor.kotlinwebflux.util.onComplete
+import com.reactor.kotlinwebflux.util.onNext
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Sinks
+import reactor.core.publisher.Sinks.EmitFailureHandler.FAIL_FAST
 import reactor.core.scheduler.Schedulers
-import reactor.core.scheduler.Schedulers.*
 import java.lang.Thread.sleep
-import java.time.Duration
 
 fun main() {
-    Flux.interval(Duration.ofMillis(1L))
-        .onBackpressureLatest()
-        .publishOn(parallel())
-        .subscribe({
-            sleep(5)
-            onNext(it)
-        }, {
-            onError(it)
-        })
-    sleep(2000)
+    Flux.fromIterable(1..8 step 2)
+        .subscribeOn(Schedulers.boundedElastic())
+        .doOnNext { doOnNext("fromIterable", it) }
+        .filter { it > 3 }
+        .doOnNext { doOnNext("filter", it) }
+        .map { it * 10 }
+        .doOnNext { doOnNext("map", it) }
+        .subscribe { onNext(it)  }
+
+    sleep(500)
 }
